@@ -22,7 +22,12 @@
                 <?php if ( has_custom_logo() ) :
                     the_custom_logo();
                 else : ?>
-                    <div class="site-logo-placeholder">ВОИ</div>
+                    <img
+                        src="https://cdn.poehali.dev/projects/6d8e668c-06d2-482d-8ba9-5c5ab781ac01/bucket/41308084-3816-4a43-8468-c98347110917.png"
+                        alt="<?php bloginfo('name'); ?>"
+                        class="site-logo"
+                        width="48" height="48"
+                    />
                 <?php endif; ?>
                 <div>
                     <div class="site-name"><?php bloginfo('name'); ?></div>

@@ -39,19 +39,20 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <div style={{ background: "var(--brand-dark)" }} className="py-2 px-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3">
-            {/* Logo placeholder */}
-            <div
-              className="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-white text-sm"
-              style={{ background: "var(--brand-mid)" }}
-            >
-              ВОИ
-            </div>
-            <div>
-              <div className="text-white font-bold text-sm" style={{ fontFamily: "Montserrat, sans-serif" }}>
-                ХМАО ВОИ
+            <Link to="/" className="flex items-center gap-3" style={{ textDecoration: "none" }}>
+              <img
+                src="https://cdn.poehali.dev/projects/6d8e668c-06d2-482d-8ba9-5c5ab781ac01/bucket/41308084-3816-4a43-8468-c98347110917.png"
+                alt="ХМАО ВОИ"
+                className="h-12 w-auto object-contain"
+                style={{ filter: "drop-shadow(0 1px 3px rgba(0,0,0,0.25))" }}
+              />
+              <div>
+                <div className="text-white font-bold text-sm leading-tight" style={{ fontFamily: "Montserrat, sans-serif" }}>
+                  ХМАО ВОИ
+                </div>
+                <div className="text-blue-200 text-xs leading-tight">Ханты-Мансийская региональная организация</div>
               </div>
-              <div className="text-blue-200 text-xs">Ханты-Мансийская региональная организация</div>
-            </div>
+            </Link>
           </div>
 
           <button
@@ -119,12 +120,19 @@ export default function Layout({ children }: { children: React.ReactNode }) {
 
       {/* FOOTER */}
       <footer style={{ background: "var(--brand-dark)", color: "#94a3b8" }} className="text-sm py-6 px-4 mt-auto">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between gap-3">
-          <div>
-            <div className="text-white font-semibold mb-1" style={{ fontFamily: "Montserrat, sans-serif" }}>
-              ХМАО ВОИ
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between gap-4 items-start">
+          <div className="flex items-center gap-3">
+            <img
+              src="https://cdn.poehali.dev/projects/6d8e668c-06d2-482d-8ba9-5c5ab781ac01/bucket/41308084-3816-4a43-8468-c98347110917.png"
+              alt="ХМАО ВОИ"
+              className="h-10 w-auto object-contain opacity-90"
+            />
+            <div>
+              <div className="text-white font-semibold mb-0.5" style={{ fontFamily: "Montserrat, sans-serif" }}>
+                ХМАО ВОИ
+              </div>
+              <div>Ханты-Мансийская региональная организация ВОИ</div>
             </div>
-            <div>Ханты-Мансийская региональная организация ВОИ</div>
           </div>
           <div className="text-right">
             <div>г. Ханты-Мансийск</div>
