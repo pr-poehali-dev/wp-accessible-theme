@@ -463,51 +463,377 @@ function hmao_voi_customizer( WP_Customize_Manager $wp_customize ) {
 add_action( 'customize_register', 'hmao_voi_customizer' );
 
 /* =========================================================
-   7. АВТОМАТИЧЕСКОЕ СОЗДАНИЕ СТРАНИЦ И МЕНЮ ПРИ АКТИВАЦИИ
+   7. АВТОМАТИЧЕСКОЕ СОЗДАНИЕ СТРАНИЦ, МЕНЮ И ДЕМО-КОНТЕНТА
    ========================================================= */
 function hmao_voi_activate() {
+
+    /* --- Страницы с контентом --- */
     $pages = [
-        'about'      => [ 'О НАС',                          'page-about.php'      ],
-        'structure'  => [ 'СТРУКТУРА ХМАО ВОИ',             'page-structure.php'  ],
-        'convention' => [ 'КОНВЕНЦИЯ ООН О ПРАВАХ ИНВАЛИДОВ', 'page-convention.php' ],
-        'famous'     => [ 'ВЕЛИКИЕ ИНВАЛИДЫ ПЛАНЕТЫ',        'page-famous.php'     ],
-        'projects'   => [ 'ПРОЕКТЫ',                         'page-projects.php'   ],
-        'news'       => [ 'НОВОСТИ',                         'page-news.php'       ],
-        'events'     => [ 'МЕРОПРИЯТИЯ',                     'page-events.php'     ],
-        'photos'     => [ 'ФОТОГРАФИИ',                      'page-photos.php'     ],
-        'documents'  => [ 'ДОКУМЕНТЫ',                       'page-documents.php'  ],
-        'team'       => [ 'КОМАНДА',                         'page-team.php'       ],
+        'about' => [
+            'title'    => 'О НАС',
+            'template' => 'page-about.php',
+            'content'  => '<h2>Кто мы</h2>
+<p>Ханты-Мансийская региональная организация Всероссийского общества инвалидов (ХМАО ВОИ) — одна из крупнейших общественных организаций Ханты-Мансийского автономного округа, объединяющая людей с ограниченными возможностями здоровья.</p>
+<p>Наша организация основана на принципах гуманизма, добровольности и равноправия. Мы работаем для того, чтобы каждый человек с инвалидностью имел равные возможности в обществе, получал необходимую поддержку и жил полноценной жизнью.</p>
+<h2>Наша миссия</h2>
+<p>Содействие реализации конституционных прав и законных интересов инвалидов, вовлечение их в общественную жизнь, интеграция в общество через реализацию социальных, правозащитных, культурных и спортивных проектов.</p>
+<h2>Основные направления деятельности</h2>
+<ul>
+<li>Правовая защита и представительство интересов инвалидов</li>
+<li>Реабилитация и социальная адаптация</li>
+<li>Содействие в трудоустройстве</li>
+<li>Спортивные и культурные мероприятия</li>
+<li>Работа с молодёжью с ограниченными возможностями</li>
+<li>Взаимодействие с государственными органами власти</li>
+</ul>',
+        ],
+        'structure' => [
+            'title'    => 'СТРУКТУРА ХМАО ВОИ',
+            'template' => 'page-structure.php',
+            'content'  => '<h2>Руководство региональной организации</h2>
+<p>Председатель региональной организации ХМАО ВОИ — [Фамилия Имя Отчество]</p>
+<p>Заместитель председателя — [Фамилия Имя Отчество]</p>
+<p>Ответственный секретарь — [Фамилия Имя Отчество]</p>
+<h2>Органы управления</h2>
+<p><strong>Конференция</strong> — высший руководящий орган организации. Собирается не реже одного раза в 5 лет.</p>
+<p><strong>Правление</strong> — руководящий орган в период между конференциями. Избирается на 5 лет.</p>
+<p><strong>Ревизионная комиссия</strong> — контрольный орган. Проводит ревизии финансово-хозяйственной деятельности.</p>
+<h2>Местные отделения</h2>
+<p>ХМАО ВОИ объединяет 22 местных отделения во всех городах и районах Ханты-Мансийского автономного округа:</p>
+<ul>
+<li>Ханты-Мансийское городское отделение</li>
+<li>Сургутское городское отделение</li>
+<li>Нижневартовское городское отделение</li>
+<li>Нефтеюганское городское отделение</li>
+<li>Когалымское городское отделение</li>
+<li>Лангепасское городское отделение</li>
+<li>Советское районное отделение</li>
+<li>Берёзовское районное отделение</li>
+</ul>',
+        ],
+        'convention' => [
+            'title'    => 'КОНВЕНЦИЯ ООН О ПРАВАХ ИНВАЛИДОВ',
+            'template' => 'page-convention.php',
+            'content'  => '<h2>О документе</h2>
+<p>Конвенция ООН о правах инвалидов принята резолюцией 61/106 Генеральной Ассамблеи от 13 декабря 2006 года. Россия ратифицировала Конвенцию 25 сентября 2012 года.</p>
+<p>Конвенция определяет права людей с ограниченными возможностями здоровья и обязательства государств по обеспечению и защите этих прав. Документ состоит из 50 статей и охватывает такие сферы, как доступность, право на жизнь, свободу выражения мнений, право на образование, здоровье и труд.</p>
+<h2>Статья 1 — Цели</h2>
+<p>Цель настоящей Конвенции заключается в поощрении, защите и обеспечении полного и равного осуществления всеми инвалидами всех прав человека и основных свобод, а также в поощрении уважения присущего им достоинства.</p>
+<h2>Статья 3 — Общие принципы</h2>
+<p>Уважение присущего человеку достоинства, его личной самостоятельности, включая свободу делать свой собственный выбор. Недискриминация. Полное и эффективное вовлечение и включение в общество.</p>
+<h2>Статья 9 — Доступность</h2>
+<p>Принятие надлежащих мер для обеспечения инвалидам доступа наравне с другими к физическому окружению, транспорту, информации и связи, включая информационно-коммуникационные технологии и системы.</p>
+<h2>Статья 24 — Образование</h2>
+<p>Инвалиды имеют право на образование. В целях реализации этого права без дискриминации и на основе равенства возможностей государства-участники обеспечивают инклюзивное образование на всех уровнях.</p>
+<h2>Статья 27 — Труд и занятость</h2>
+<p>Инвалиды имеют право на труд наравне с другими; это включает право на получение возможности зарабатывать себе на жизнь трудом, который инвалид свободно выбирает или на который он свободно соглашается.</p>',
+        ],
+        'famous'     => [ 'title' => 'ВЕЛИКИЕ ИНВАЛИДЫ ПЛАНЕТЫ', 'template' => 'page-famous.php',     'content' => '' ],
+        'projects'   => [ 'title' => 'ПРОЕКТЫ',                   'template' => 'page-projects.php',   'content' => '' ],
+        'news'       => [ 'title' => 'НОВОСТИ',                   'template' => 'page-news.php',       'content' => '' ],
+        'events'     => [ 'title' => 'МЕРОПРИЯТИЯ',               'template' => 'page-events.php',     'content' => '' ],
+        'photos'     => [ 'title' => 'ФОТОГРАФИИ',                'template' => 'page-photos.php',     'content' => '' ],
+        'documents'  => [ 'title' => 'ДОКУМЕНТЫ',                 'template' => 'page-documents.php',  'content' => '' ],
+        'team'       => [ 'title' => 'КОМАНДА',                   'template' => 'page-team.php',       'content' => '' ],
     ];
 
     $page_ids = [];
 
-    foreach ( $pages as $slug => [ $title, $template ] ) {
+    foreach ( $pages as $slug => $cfg ) {
         $existing = get_page_by_path( $slug );
         if ( ! $existing ) {
             $page_id = wp_insert_post( [
-                'post_title'    => $title,
+                'post_title'    => $cfg['title'],
                 'post_name'     => $slug,
                 'post_status'   => 'publish',
                 'post_type'     => 'page',
-                'page_template' => $template,
+                'post_content'  => $cfg['content'],
+                'page_template' => $cfg['template'],
             ] );
-            update_post_meta( $page_id, '_wp_page_template', $template );
+            update_post_meta( $page_id, '_wp_page_template', $cfg['template'] );
             $page_ids[ $slug ] = $page_id;
         } else {
             $page_ids[ $slug ] = $existing->ID;
         }
     }
 
-    // Создаём главное меню
+    /* --- Настройки Customizer по умолчанию --- */
+    $defaults = [
+        'achievement_1_num'   => '30+',
+        'achievement_1_label' => 'лет работы на базе региона',
+        'achievement_1_icon'  => '🏛',
+        'achievement_2_num'   => '5000+',
+        'achievement_2_label' => 'членов организации в 32 отраслях',
+        'achievement_2_icon'  => '👥',
+        'achievement_3_num'   => '250+',
+        'achievement_3_label' => 'реализованных проектов',
+        'achievement_3_icon'  => '🚀',
+        'achievement_4_num'   => '50+',
+        'achievement_4_label' => 'наград и грамот',
+        'achievement_4_icon'  => '🏆',
+        'contact_address'     => 'г. Ханты-Мансийск, ул. Примерная, д. 1',
+        'contact_phone'       => '8 (3467) 00-00-00',
+        'contact_email'       => 'info@hmao-voi.ru',
+        'contact_hours'       => 'Пн–Пт: 9:00–18:00',
+        'footer_copy'         => '© ' . date('Y') . ' ХМАО ВОИ. Все права защищены.',
+    ];
+    foreach ( $defaults as $key => $val ) {
+        if ( get_theme_mod( $key ) === '' || get_theme_mod( $key ) === false ) {
+            set_theme_mod( $key, $val );
+        }
+    }
+
+    /* --- Демо-новость --- */
+    if ( ! get_posts(['post_type'=>'post','numberposts'=>1]) ) {
+        wp_insert_post([
+            'post_title'   => 'Добро пожаловать на сайт ХМАО ВОИ!',
+            'post_content' => '<p>Ханты-Мансийская региональная организация Всероссийского общества инвалидов рада приветствовать вас на нашем обновлённом сайте.</p><p>Здесь вы найдёте информацию о деятельности организации, актуальные новости, расписание мероприятий и многое другое.</p><p>Следите за обновлениями!</p>',
+            'post_status'  => 'publish',
+            'post_author'  => 1,
+        ]);
+    }
+
+    /* --- Демо-проекты --- */
+    $demo_projects = [
+        [
+            'title'   => 'Доступная среда',
+            'content' => 'Обследование объектов социальной инфраструктуры на предмет доступности для маломобильных граждан. Разработка рекомендаций по адаптации зданий и территорий.',
+            'status'  => 'active',
+            'period'  => '2023–2024',
+            'tags'    => 'Доступность, Инфраструктура',
+        ],
+        [
+            'title'   => 'Спорт без границ',
+            'content' => 'Организация адаптивных спортивных секций для людей с различными видами инвалидности. Участие в региональных и федеральных паралимпийских соревнованиях.',
+            'status'  => 'active',
+            'period'  => '2022–2024',
+            'tags'    => 'Спорт, Реабилитация',
+        ],
+        [
+            'title'   => 'Цифровая грамотность',
+            'content' => 'Бесплатные курсы компьютерной грамотности для людей с инвалидностью. Обучение работе с государственными порталами и дистанционными сервисами.',
+            'status'  => 'new',
+            'period'  => '2024',
+            'tags'    => 'Образование, Технологии',
+        ],
+        [
+            'title'   => 'Правовая помощь',
+            'content' => 'Бесплатные юридические консультации для инвалидов по вопросам получения льгот, защиты прав, оформления документов.',
+            'status'  => 'active',
+            'period'  => '2020–2024',
+            'tags'    => 'Право, Консультации',
+        ],
+    ];
+    $existing_projects = get_posts(['post_type'=>'voi_project','numberposts'=>1]);
+    if ( empty($existing_projects) ) {
+        foreach ( $demo_projects as $order => $p ) {
+            $pid = wp_insert_post([
+                'post_title'   => $p['title'],
+                'post_content' => $p['content'],
+                'post_status'  => 'publish',
+                'post_type'    => 'voi_project',
+                'menu_order'   => $order,
+            ]);
+            update_post_meta( $pid, '_voi_project_status', $p['status'] );
+            update_post_meta( $pid, '_voi_project_period', $p['period'] );
+            update_post_meta( $pid, '_voi_project_tags',   $p['tags'] );
+        }
+    }
+
+    /* --- Демо-мероприятия --- */
+    $demo_events = [
+        [
+            'title'   => 'Отчётно-выборная конференция ХМАО ВОИ',
+            'content' => 'Ежегодная отчётно-выборная конференция региональной организации. Подведение итогов работы, избрание руководящих органов на новый срок.',
+            'date'    => '25 апреля 2026',
+            'time'    => '10:00',
+            'place'   => 'г. Ханты-Мансийск, ул. Мира, 5 — Дом народного творчества',
+            'type'    => 'Конференция',
+            'day'     => '25',
+            'month'   => 'апр',
+        ],
+        [
+            'title'   => 'Семинар: Социальные права инвалидов',
+            'content' => 'Практический семинар с участием юристов и социальных работников. Темы: новые льготы, изменения в законодательстве, порядок получения ТСР.',
+            'date'    => '20 мая 2026',
+            'time'    => '14:00',
+            'place'   => 'г. Ханты-Мансийск, пр. Ленина, 3',
+            'type'    => 'Семинар',
+            'day'     => '20',
+            'month'   => 'май',
+        ],
+        [
+            'title'   => 'Региональный чемпионат по адаптивному теннису',
+            'content' => 'Ежегодный чемпионат по адаптивному настольному теннису. Принимают участие спортсмены из всех местных отделений ХМАО ВОИ.',
+            'date'    => '15 мая 2026',
+            'time'    => '09:00',
+            'place'   => 'г. Сургут, спорткомплекс «Олимпия»',
+            'type'    => 'Спортивное',
+            'day'     => '15',
+            'month'   => 'май',
+        ],
+    ];
+    $existing_events = get_posts(['post_type'=>'voi_event','numberposts'=>1]);
+    if ( empty($existing_events) ) {
+        foreach ( $demo_events as $order => $e ) {
+            $eid = wp_insert_post([
+                'post_title'   => $e['title'],
+                'post_content' => $e['content'],
+                'post_status'  => 'publish',
+                'post_type'    => 'voi_event',
+                'menu_order'   => $order,
+            ]);
+            update_post_meta( $eid, '_voi_event_date',  $e['date'] );
+            update_post_meta( $eid, '_voi_event_time',  $e['time'] );
+            update_post_meta( $eid, '_voi_event_place', $e['place'] );
+            update_post_meta( $eid, '_voi_event_type',  $e['type'] );
+            update_post_meta( $eid, '_voi_event_day',   $e['day'] );
+            update_post_meta( $eid, '_voi_event_month', $e['month'] );
+        }
+    }
+
+    /* --- Демо-документы --- */
+    $demo_docs = [
+        [
+            'title'    => 'Устав ХМАО ВОИ (редакция 2022)',
+            'category' => 'Учредительные документы',
+            'type'     => 'PDF',
+            'size'     => '2.1 МБ',
+            'date'     => '15.03.2022',
+            'url'      => '',
+        ],
+        [
+            'title'    => 'Годовой отчёт о деятельности за 2025 год',
+            'category' => 'Отчёты и планы',
+            'type'     => 'PDF',
+            'size'     => '3.8 МБ',
+            'date'     => '31.01.2026',
+            'url'      => '',
+        ],
+        [
+            'title'    => 'Памятка по получению технических средств реабилитации',
+            'category' => 'Методические материалы',
+            'type'     => 'PDF',
+            'size'     => '0.6 МБ',
+            'date'     => '01.03.2025',
+            'url'      => '',
+        ],
+        [
+            'title'    => 'Льготы и выплаты инвалидам в 2026 году',
+            'category' => 'Методические материалы',
+            'type'     => 'DOCX',
+            'size'     => '0.7 МБ',
+            'date'     => '05.01.2026',
+            'url'      => '',
+        ],
+    ];
+    $existing_docs = get_posts(['post_type'=>'voi_document','numberposts'=>1]);
+    if ( empty($existing_docs) ) {
+        foreach ( $demo_docs as $order => $d ) {
+            $did = wp_insert_post([
+                'post_title'  => $d['title'],
+                'post_status' => 'publish',
+                'post_type'   => 'voi_document',
+                'menu_order'  => $order,
+            ]);
+            update_post_meta( $did, '_voi_doc_category', $d['category'] );
+            update_post_meta( $did, '_voi_file_type',    $d['type'] );
+            update_post_meta( $did, '_voi_file_size',    $d['size'] );
+            update_post_meta( $did, '_voi_doc_date',     $d['date'] );
+            update_post_meta( $did, '_voi_file_url',     $d['url'] );
+        }
+    }
+
+    /* --- Демо-команда --- */
+    $demo_team = [
+        [ 'name' => 'Иванова Мария Ивановна',    'position' => 'Председатель ХМАО ВОИ',                 'phone' => '8 (3467) 00-00-01', 'email' => '' ],
+        [ 'name' => 'Петров Александр Николаевич','position' => 'Заместитель председателя',              'phone' => '8 (3467) 00-00-02', 'email' => '' ],
+        [ 'name' => 'Сидорова Елена Фёдоровна',  'position' => 'Ответственный секретарь',                'phone' => '8 (3467) 00-00-03', 'email' => '' ],
+        [ 'name' => 'Кузнецов Виктор Павлович',  'position' => 'Юрисконсульт',                          'phone' => '', 'email' => '' ],
+        [ 'name' => 'Смирнова Ольга Викторовна', 'position' => 'Специалист по социальной работе',        'phone' => '', 'email' => '' ],
+        [ 'name' => 'Фёдоров Игорь Семёнович',  'position' => 'Специалист по проектной деятельности',   'phone' => '', 'email' => '' ],
+    ];
+    $existing_team = get_posts(['post_type'=>'voi_team','numberposts'=>1]);
+    if ( empty($existing_team) ) {
+        foreach ( $demo_team as $order => $m ) {
+            $tid = wp_insert_post([
+                'post_title'  => $m['name'],
+                'post_status' => 'publish',
+                'post_type'   => 'voi_team',
+                'menu_order'  => $order,
+            ]);
+            update_post_meta( $tid, '_voi_position', $m['position'] );
+            update_post_meta( $tid, '_voi_phone',    $m['phone'] );
+            update_post_meta( $tid, '_voi_email',    $m['email'] );
+        }
+    }
+
+    /* --- Демо-великие люди --- */
+    $demo_famous = [
+        [
+            'name'    => 'Людвиг ван Бетховен',
+            'content' => 'Один из величайших композиторов всех времён. Несмотря на полную глухоту, написал свои лучшие произведения, в том числе знаменитую Девятую симфонию.',
+            'years'   => '1770–1827',
+            'field'   => 'Музыкант, композитор',
+            'emoji'   => '🎵',
+        ],
+        [
+            'name'    => 'Стивен Хокинг',
+            'content' => 'Выдающийся физик-теоретик, автор теорий о чёрных дырах и космологии. Болел боковым амиотрофическим склерозом с 21 года, но продолжал работать до конца жизни.',
+            'years'   => '1942–2018',
+            'field'   => 'Физик-теоретик',
+            'emoji'   => '🔭',
+        ],
+        [
+            'name'    => 'Франклин Рузвельт',
+            'content' => 'Единственный президент США, переизбиравшийся четыре раза. Перенёс полиомиелит в 1921 году, большую часть жизни провёл в инвалидной коляске.',
+            'years'   => '1882–1945',
+            'field'   => 'Политик, 32-й президент США',
+            'emoji'   => '🏛',
+        ],
+        [
+            'name'    => 'Алексей Маресьев',
+            'content' => 'Советский военный лётчик, после ампутации обеих ног вернулся в строй и совершил ещё 86 боевых вылетов. Герой Советского Союза.',
+            'years'   => '1916–2001',
+            'field'   => 'Лётчик-ас, Герой СССР',
+            'emoji'   => '✈️',
+        ],
+    ];
+    $existing_famous = get_posts(['post_type'=>'voi_famous','numberposts'=>1]);
+    if ( empty($existing_famous) ) {
+        foreach ( $demo_famous as $order => $f ) {
+            $fid = wp_insert_post([
+                'post_title'   => $f['name'],
+                'post_content' => $f['content'],
+                'post_status'  => 'publish',
+                'post_type'    => 'voi_famous',
+                'menu_order'   => $order,
+            ]);
+            update_post_meta( $fid, '_voi_famous_years', $f['years'] );
+            update_post_meta( $fid, '_voi_famous_field', $f['field'] );
+            update_post_meta( $fid, '_voi_famous_emoji', $f['emoji'] );
+        }
+    }
+
+    /* --- Главное меню --- */
     $menu_name = 'Главное меню';
-    $menu_id   = wp_create_nav_menu( $menu_name );
+    $existing_menu = wp_get_nav_menu_object( $menu_name );
+    $menu_id = $existing_menu ? $existing_menu->term_id : wp_create_nav_menu( $menu_name );
 
     if ( ! is_wp_error( $menu_id ) ) {
+        // Очищаем старые пункты если переактивация
+        $old_items = wp_get_nav_menu_items( $menu_id );
+        if ( $old_items ) {
+            foreach ( $old_items as $item ) {
+                wp_delete_post( $item->ID, true );
+            }
+        }
+
         $order = 1;
-        foreach ( $pages as $slug => [ $title, ] ) {
+        foreach ( $pages as $slug => $cfg ) {
             if ( isset( $page_ids[ $slug ] ) ) {
                 wp_update_nav_menu_item( $menu_id, 0, [
-                    'menu-item-title'     => $title,
+                    'menu-item-title'     => $cfg['title'],
                     'menu-item-object'    => 'page',
                     'menu-item-object-id' => $page_ids[ $slug ],
                     'menu-item-type'      => 'post_type',
@@ -520,6 +846,29 @@ function hmao_voi_activate() {
         $locations = get_theme_mod( 'nav_menu_locations', [] );
         $locations['primary'] = $menu_id;
         set_theme_mod( 'nav_menu_locations', $locations );
+    }
+
+    /* --- Главная страница --- */
+    $front = get_page_by_path('front-home');
+    if ( ! $front ) {
+        $front_id = wp_insert_post([
+            'post_title'    => 'Главная',
+            'post_name'     => 'front-home',
+            'post_status'   => 'publish',
+            'post_type'     => 'page',
+            'page_template' => 'front-page.php',
+        ]);
+        update_post_meta( $front_id, '_wp_page_template', 'front-page.php' );
+        update_option( 'show_on_front', 'page' );
+        update_option( 'page_on_front', $front_id );
+    }
+
+    /* --- Название и описание сайта --- */
+    if ( get_option('blogname') === 'Just another WordPress site' || get_option('blogname') === '' ) {
+        update_option( 'blogname', 'ХМАО ВОИ' );
+    }
+    if ( get_option('blogdescription') === '' ) {
+        update_option( 'blogdescription', 'Ханты-Мансийская региональная организация инвалидов' );
     }
 
     flush_rewrite_rules();
@@ -545,15 +894,30 @@ add_action( 'admin_enqueue_scripts', 'hmao_voi_enqueue_admin_scripts' );
 
 /** Вернуть значение Customizer или дефолт */
 function hmao_mod( $key, $default = '' ) {
-    return get_theme_mod( $key, $default );
+    $builtin_defaults = [
+        'contact_address' => 'г. Ханты-Мансийск, ул. Примерная, д. 1',
+        'contact_phone'   => '8 (3467) 00-00-00',
+        'contact_email'   => 'info@hmao-voi.ru',
+        'contact_hours'   => 'Пн–Пт: 9:00–18:00',
+        'footer_copy'     => '© ' . date('Y') . ' ХМАО ВОИ. Все права защищены.',
+    ];
+    $fallback = $default !== '' ? $default : ( $builtin_defaults[ $key ] ?? '' );
+    return get_theme_mod( $key, $fallback );
 }
 
-/** Данные блока достижений */
+/** Данные блока достижений (с fallback-значениями) */
 function hmao_achievement( $n ) {
+    $fallbacks = [
+        1 => [ 'num' => '30+',   'label' => 'лет работы на базе региона',       'icon' => '🏛' ],
+        2 => [ 'num' => '5000+', 'label' => 'членов организации в 32 отраслях', 'icon' => '👥' ],
+        3 => [ 'num' => '250+',  'label' => 'реализованных проектов',            'icon' => '🚀' ],
+        4 => [ 'num' => '50+',   'label' => 'наград и грамот',                  'icon' => '🏆' ],
+    ];
+    $fb = $fallbacks[ $n ] ?? [ 'num' => '', 'label' => '', 'icon' => '' ];
     return [
-        'num'   => hmao_mod( "achievement_{$n}_num",   '' ),
-        'label' => hmao_mod( "achievement_{$n}_label", '' ),
-        'icon'  => hmao_mod( "achievement_{$n}_icon",  '' ),
+        'num'   => hmao_mod( "achievement_{$n}_num",   $fb['num']   ),
+        'label' => hmao_mod( "achievement_{$n}_label", $fb['label'] ),
+        'icon'  => hmao_mod( "achievement_{$n}_icon",  $fb['icon']  ),
     ];
 }
 
