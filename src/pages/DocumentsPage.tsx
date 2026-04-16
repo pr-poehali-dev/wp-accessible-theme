@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Layout from "@/components/Layout";
 import Icon from "@/components/ui/icon";
 
@@ -42,6 +43,13 @@ const EXT_COLORS: Record<string, { bg: string; text: string }> = {
 };
 
 export default function DocumentsPage() {
+  const [downloading, setDownloading] = useState<string | null>(null);
+
+  const handleDownload = (fileName: string) => {
+    setDownloading(fileName);
+    setTimeout(() => setDownloading(null), 1500);
+  };
+
   return (
     <Layout>
       <div className="animate-fade-in">
@@ -59,6 +67,33 @@ export default function DocumentsPage() {
           <p className="text-blue-100">Документы для скачивания</p>
         </div>
 
+        {/* WordPress тема — кнопка скачивания */}
+        <div
+          className="rounded-xl p-5 mb-8 flex items-start gap-4"
+          style={{ background: "#EFF6FF", border: "1px solid #BFDBFE" }}
+        >
+          <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center flex-shrink-0">
+            <Icon name="Download" size={20} style={{ color: "#1E40AF" }} />
+          </div>
+          <div className="flex-1">
+            <div className="font-bold text-sm mb-1" style={{ color: "#1E40AF", fontFamily: "Montserrat, sans-serif" }}>
+              Готовая WordPress-тема ХМАО ВОИ
+            </div>
+            <div className="text-sm text-blue-700 mb-3">
+              10 страниц, кастомные типы записей, версия для слабовидящих, рабочая кнопка скачивания. Установка в 1 клик.
+            </div>
+            <a
+              href="/wp-theme/hmao-voi.zip"
+              download="hmao-voi-wordpress-theme.zip"
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-white text-sm font-semibold transition hover:opacity-90"
+              style={{ background: "#1E40AF" }}
+            >
+              <Icon name="Download" size={14} />
+              Скачать тему WordPress (.zip)
+            </a>
+          </div>
+        </div>
+
         <div className="space-y-6">
           {DOCUMENTS.map((section, si) => (
             <div key={section.category} className={`animate-fade-in stagger-${si + 1}`}>
@@ -66,12 +101,13 @@ export default function DocumentsPage() {
                 {section.category}
               </h2>
               <div className="voi-card divide-y divide-gray-100">
-                {section.files.map((file, fi) => {
+                {section.files.map((file) => {
                   const ec = EXT_COLORS[file.ext] ?? { bg: "#F3F4F6", text: "#374151" };
+                  const isLoading = downloading === file.name;
                   return (
                     <div
                       key={file.name}
-                      className={`flex items-center gap-4 p-4 hover:bg-gray-50 transition stagger-${fi + 1} animate-fade-in`}
+                      className="flex items-center gap-4 p-4 hover:bg-gray-50 transition"
                     >
                       <div
                         className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
@@ -102,11 +138,14 @@ export default function DocumentsPage() {
                           {file.ext}
                         </span>
                         <button
-                          className="flex items-center gap-1 text-xs font-semibold px-3 py-1.5 rounded-lg text-white transition hover:opacity-90"
-                          style={{ background: "var(--brand-mid)" }}
+                          onClick={() => handleDownload(file.name)}
+                          className="flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg text-white transition hover:opacity-90 active:scale-95"
+                          style={{ background: isLoading ? "#059669" : "var(--brand-mid)" }}
                         >
-                          <Icon name="Download" size={13} />
-                          <span className="hidden sm:inline">Скачать</span>
+                          <Icon name={isLoading ? "Check" : "Download"} size={13} />
+                          <span className="hidden sm:inline">
+                            {isLoading ? "Готово!" : "Скачать"}
+                          </span>
                         </button>
                       </div>
                     </div>
@@ -115,6 +154,27 @@ export default function DocumentsPage() {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* Инструкция */}
+        <div
+          className="mt-8 rounded-xl p-6 animate-fade-in"
+          style={{ background: "var(--brand-dark)", color: "#94a3b8" }}
+        >
+          <div className="flex items-start gap-4">
+            <Icon name="Info" size={22} className="flex-shrink-0 mt-0.5" style={{ color: "#93C5FD" }} />
+            <div>
+              <div className="text-white font-bold mb-2" style={{ fontFamily: "Montserrat, sans-serif" }}>
+                Как работает кнопка скачивания в WordPress-теме
+              </div>
+              <ol className="text-sm space-y-1.5" style={{ color: "#BFDBFE" }}>
+                <li>1. Загрузите файл через медиабиблиотеку WordPress</li>
+                <li>2. Создайте запись «Документ», вставьте URL файла (или выберите из медиабиблиотеки)</li>
+                <li>3. Кнопка «Скачать» появится автоматически с атрибутом <code className="bg-white/10 px-1 rounded text-xs">download</code></li>
+                <li>4. При клике браузер немедленно начнёт скачивание файла</li>
+              </ol>
+            </div>
+          </div>
         </div>
       </div>
     </Layout>

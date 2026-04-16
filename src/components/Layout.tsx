@@ -12,6 +12,7 @@ const NAV_ITEMS = [
   { label: "МЕРОПРИЯТИЯ", path: "/events" },
   { label: "ФОТОГРАФИИ", path: "/photos" },
   { label: "ДОКУМЕНТЫ", path: "/documents" },
+  { label: "КОМАНДА", path: "/team" },
 ];
 
 export default function Layout({ children }: { children: React.ReactNode }) {
