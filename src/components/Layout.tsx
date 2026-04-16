@@ -36,32 +36,62 @@ export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen flex flex-col bg-gray-50">
       {/* TOP BAR */}
-      <div style={{ background: "var(--brand-dark)" }} className="py-2 px-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Link to="/" className="flex items-center gap-3" style={{ textDecoration: "none" }}>
+      <div
+        style={{
+          background: "linear-gradient(135deg, #0f1c2e 0%, #1a2e48 50%, #1e3a5f 100%)",
+          borderBottom: "3px solid #2E9BD6",
+        }}
+        className="py-3 px-4"
+      >
+        <div className="max-w-7xl mx-auto flex items-center justify-between gap-4">
+          <Link to="/" className="flex items-center gap-4" style={{ textDecoration: "none" }}>
+            {/* Логотип на белом фоне-подложке для контраста */}
+            <div
+              className="flex items-center justify-center rounded-xl flex-shrink-0"
+              style={{
+                background: "#fff",
+                padding: "6px 10px",
+                boxShadow: "0 2px 12px rgba(46,155,214,0.25)",
+              }}
+            >
               <img
                 src="https://cdn.poehali.dev/projects/6d8e668c-06d2-482d-8ba9-5c5ab781ac01/bucket/41308084-3816-4a43-8468-c98347110917.png"
                 alt="ХМАО ВОИ"
-                className="h-12 w-auto object-contain"
-                style={{ filter: "drop-shadow(0 1px 3px rgba(0,0,0,0.25))" }}
+                style={{ height: "44px", width: "auto", objectFit: "contain", display: "block" }}
               />
-              <div>
-                <div className="text-white font-bold text-sm leading-tight" style={{ fontFamily: "Montserrat, sans-serif" }}>
-                  ХМАО ВОИ
-                </div>
-                <div className="text-blue-200 text-xs leading-tight">Ханты-Мансийская региональная организация</div>
+            </div>
+            {/* Текст */}
+            <div>
+              <div
+                className="font-extrabold leading-tight"
+                style={{
+                  fontFamily: "Montserrat, sans-serif",
+                  fontSize: "1rem",
+                  color: "#fff",
+                  letterSpacing: "0.03em",
+                }}
+              >
+                ХМАО ВОИ
               </div>
-            </Link>
-          </div>
+              <div style={{ color: "#93C5FD", fontSize: "0.72rem", marginTop: "2px", lineHeight: 1.3 }}>
+                Ханты-Мансийская региональная<br className="hidden sm:block" /> организация инвалидов
+              </div>
+            </div>
+          </Link>
 
           <button
             onClick={toggleImpaired}
             title={impaired ? "Обычная версия" : "Версия для слабовидящих"}
-            className="flex items-center gap-2 text-white text-xs px-3 py-1.5 rounded border border-white/30 hover:bg-white/10 transition"
-            style={{ fontFamily: "Montserrat, sans-serif" }}
+            className="flex items-center gap-2 text-xs px-3 py-1.5 rounded-lg transition"
+            style={{
+              fontFamily: "Montserrat, sans-serif",
+              fontWeight: 600,
+              border: impaired ? "1px solid #2E9BD6" : "1px solid rgba(255,255,255,0.3)",
+              background: impaired ? "#2E9BD6" : "rgba(255,255,255,0.07)",
+              color: "#fff",
+            }}
           >
-            <Icon name="Eye" size={15} />
+            <Icon name="Eye" size={14} />
             <span className="hidden sm:inline">
               {impaired ? "Обычная версия" : "Версия для слабовидящих"}
             </span>
@@ -70,7 +100,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* NAV BAR */}
-      <nav style={{ background: "var(--brand-mid)" }} className="shadow-md sticky top-0 z-50">
+      <nav style={{ background: "#1e2d42", boxShadow: "0 2px 10px rgba(0,0,0,0.3)" }} className="sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4">
           {/* Desktop */}
           <div className="hidden lg:flex items-center gap-0.5 py-1 flex-wrap">
@@ -119,7 +149,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       </main>
 
       {/* FOOTER */}
-      <footer style={{ background: "var(--brand-dark)", color: "#94a3b8" }} className="text-sm py-6 px-4 mt-auto">
+      <footer style={{ background: "linear-gradient(135deg, #0f1c2e 0%, #1a2e48 100%)", borderTop: "3px solid #2E9BD6", color: "#94a3b8" }} className="text-sm py-6 px-4 mt-auto">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between gap-4 items-start">
           <div className="flex items-center gap-3">
             <img
