@@ -1,133 +1,60 @@
 <?php
 /**
  * Template Name: Документы
- * Страница со списком документов для скачивания
  */
 get_header();
 ?>
-
-<section class="page-hero">
+<div class="page-hero">
     <div class="container">
-        <div class="page-hero__tag">📄 Документы организации</div>
-        <h1><?php the_title(); ?></h1>
-        <p>Документы для скачивания — учредительные, отчётные, нормативные и методические материалы</p>
+        <div class="page-hero__badge">📄 Документы</div>
+        <h1>Документы</h1>
+        <p>Учредительные, отчётные, нормативные и методические материалы</p>
     </div>
-</section>
+</div>
 
-<div class="page-content">
+<div class="documents-section">
 <div class="container">
-
-    <?php
-    // Получаем все документы, группируем по категориям
-    $documents = get_posts([
-        'post_type'      => 'voi_document',
-        'posts_per_page' => -1,
-        'post_status'    => 'publish',
-        'orderby'        => 'menu_order',
-        'order'          => 'ASC',
-    ]);
-
-    // Группируем по категории
-    $grouped = [];
-    foreach ( $documents as $doc ) {
-        $cat = get_post_meta( $doc->ID, '_voi_doc_category', true ) ?: 'Документы';
-        $grouped[ $cat ][] = $doc;
-    }
-    ?>
-
-    <?php if ( empty($grouped) ) : ?>
-        <div class="voi-card" style="padding:40px; text-align:center; color:#64748B;">
-            <div style="font-size:3rem; margin-bottom:16px;">📄</div>
-            <p>Документы пока не добавлены. <br>Перейдите в <strong>Документы → Добавить документ</strong> в панели управления.</p>
+<?php
+$docs = get_posts(['post_type'=>'voi_document','numberposts'=>-1,'orderby'=>'menu_order','order'=>'ASC']);
+$grouped = [];
+foreach ($docs as $doc) {
+    $cat = get_post_meta($doc->ID,'_voi_doc_category',true) ?: 'Документы';
+    $grouped[$cat][] = $doc;
+}
+if ($grouped) :
+    foreach ($grouped as $cat => $items) :
+?>
+<h2 style="font-size:1.2rem;font-family:var(--font-head);color:var(--brand-dark);margin:2rem 0 1rem;padding-bottom:.5rem;border-bottom:2px solid var(--brand-light);"><?php echo esc_html($cat); ?></h2>
+<div class="documents-grid">
+<?php foreach ($items as $d) :
+    $url  = get_post_meta($d->ID,'_voi_file_url', true);
+    $size = get_post_meta($d->ID,'_voi_file_size',true);
+    $type = get_post_meta($d->ID,'_voi_file_type',true) ?: 'PDF';
+    $date = get_post_meta($d->ID,'_voi_doc_date', true);
+    $t = strtolower($type);
+    $icon_class = ($t==='pdf') ? 'doc-card__icon--pdf' : (in_array($t,['docx','doc']) ? 'doc-card__icon--docx' : (in_array($t,['xlsx','xls']) ? 'doc-card__icon--xlsx' : 'doc-card__icon--other'));
+?>
+<div class="doc-card">
+    <div class="doc-card__icon <?php echo $icon_class; ?>"><?php echo esc_html($type); ?></div>
+    <div class="doc-card__info">
+        <div class="doc-card__title"><?php echo esc_html($d->post_title); ?></div>
+        <div class="doc-card__meta">
+            <?php if ($type) echo esc_html($type); ?>
+            <?php if ($size) echo ' · ' . esc_html($size); ?>
+            <?php if ($date) echo ' · ' . esc_html($date); ?>
         </div>
+    </div>
+    <?php if ($url) : $fn = basename(parse_url($url,PHP_URL_PATH)); ?>
+    <a href="<?php echo esc_url($url); ?>" download="<?php echo esc_attr($fn); ?>" class="doc-card__download" rel="nofollow">⬇ Скачать</a>
     <?php else : ?>
-
-    <?php foreach ( $grouped as $category => $docs ) : ?>
-    <div class="docs-section">
-        <div class="docs-section__title"><?php echo esc_html( $category ); ?></div>
-        <div class="docs-list">
-            <?php foreach ( $docs as $doc ) :
-                $file_url  = get_post_meta( $doc->ID, '_voi_file_url',  true );
-                $file_size = get_post_meta( $doc->ID, '_voi_file_size', true );
-                $file_type = get_post_meta( $doc->ID, '_voi_file_type', true ) ?: 'PDF';
-                $doc_date  = get_post_meta( $doc->ID, '_voi_doc_date',  true );
-
-                // Определяем CSS-класс для бейджа типа файла
-                $ext_class = 'ext-badge--other';
-                if ( $file_type === 'PDF' )        $ext_class = 'ext-badge--pdf';
-                elseif ( in_array( $file_type, ['DOCX','DOC'] ) ) $ext_class = 'ext-badge--docx';
-                elseif ( in_array( $file_type, ['XLSX','XLS'] ) ) $ext_class = 'ext-badge--xlsx';
-            ?>
-            <div class="doc-item">
-
-                <div class="doc-item__icon">
-                    <?php echo hmao_icon('file'); ?>
-                </div>
-
-                <div class="doc-item__body">
-                    <div class="doc-item__name">
-                        <?php if ( $file_url ) : ?>
-                            <a href="<?php echo esc_url($file_url); ?>"
-                               download="<?php echo esc_attr( basename( parse_url($file_url, PHP_URL_PATH) ) ); ?>"
-                               style="color:inherit; text-decoration:none;"
-                               rel="nofollow">
-                                <?php echo esc_html( get_the_title($doc) ); ?>
-                            </a>
-                        <?php else : ?>
-                            <?php echo esc_html( get_the_title($doc) ); ?>
-                        <?php endif; ?>
-                    </div>
-                    <div class="doc-item__meta">
-                        <?php if ( $file_size ) : ?>
-                            <span><?php echo esc_html( $file_size ); ?></span>
-                        <?php endif; ?>
-                        <?php if ( $doc_date ) : ?>
-                            <span><?php echo hmao_icon('calendar'); ?> <?php echo esc_html( $doc_date ); ?></span>
-                        <?php endif; ?>
-                    </div>
-                </div>
-
-                <div class="doc-item__actions">
-                    <span class="ext-badge <?php echo esc_attr($ext_class); ?>">
-                        <?php echo esc_html( $file_type ); ?>
-                    </span>
-
-                    <?php if ( $file_url ) :
-                        $filename = basename( parse_url( $file_url, PHP_URL_PATH ) );
-                    ?>
-                    <!-- ===== РАБОЧАЯ КНОПКА СКАЧИВАНИЯ ===== -->
-                    <a href="<?php echo esc_url( $file_url ); ?>"
-                       download="<?php echo esc_attr( $filename ); ?>"
-                       class="btn-download"
-                       rel="nofollow"
-                       title="Скачать: <?php echo esc_attr( get_the_title($doc) ); ?>">
-                        <?php echo hmao_icon('download'); ?>
-                        Скачать
-                    </a>
-                    <?php else : ?>
-                    <span class="btn-download" style="opacity:.4; cursor:not-allowed;">
-                        <?php echo hmao_icon('download'); ?> Нет файла
-                    </span>
-                    <?php endif; ?>
-                </div>
-
-            </div><!-- .doc-item -->
-            <?php endforeach; ?>
-        </div><!-- .docs-list -->
-    </div><!-- .docs-section -->
-    <?php endforeach; ?>
-
+    <span class="doc-card__download doc-card__download--disabled">Нет файла</span>
     <?php endif; ?>
-
-    <!-- Редактируемый контент страницы -->
-    <?php if ( have_posts() ) : while ( have_posts() ) : the_post();
-        if ( get_the_content() ) : ?>
-            <div class="entry-content voi-card" style="padding:28px; margin-top:24px;">
-                <?php the_content(); ?>
-            </div>
-        <?php endif;
-    endwhile; endif; ?>
-
+</div>
+<?php endforeach; ?>
+</div>
+<?php endforeach; else : ?>
+<p style="color:var(--gray-600);padding:2rem 0;">Документы пока не добавлены. Перейдите в <strong>Документы → Добавить</strong> в панели администратора.</p>
+<?php endif; ?>
 </div>
 </div>
 

@@ -12,66 +12,46 @@
 
 <div class="site-wrapper">
 
-<!-- ===== TOP BAR ===== -->
+<!-- TOP BAR -->
 <div class="top-bar">
     <div class="container">
         <div class="top-bar__inner">
-
-            <!-- Логотип + название -->
             <a href="<?php echo esc_url( home_url('/') ); ?>" class="site-branding">
                 <?php if ( has_custom_logo() ) :
                     the_custom_logo();
                 else : ?>
-                    <img
-                        src="https://cdn.poehali.dev/projects/6d8e668c-06d2-482d-8ba9-5c5ab781ac01/bucket/41308084-3816-4a43-8468-c98347110917.png"
-                        alt="<?php bloginfo('name'); ?>"
-                        class="site-logo"
-                        width="48" height="48"
-                    />
+                    <img src="https://cdn.poehali.dev/projects/6d8e668c-06d2-482d-8ba9-5c5ab781ac01/bucket/41308084-3816-4a43-8468-c98347110917.png"
+                         alt="<?php bloginfo('name'); ?>" class="site-logo" width="48" height="48">
                 <?php endif; ?>
                 <div>
                     <div class="site-name"><?php bloginfo('name'); ?></div>
                     <div class="site-tagline"><?php bloginfo('description'); ?></div>
                 </div>
             </a>
-
-            <!-- Кнопка версии для слабовидящих -->
-            <button
-                class="vi-toggle"
-                id="vi-toggle"
-                aria-label="Версия для слабовидящих"
-                title="Версия для слабовидящих"
-            >
-                <?php echo hmao_icon('eye'); ?>
+            <button class="vi-toggle" id="vi-toggle" aria-label="Версия для слабовидящих">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
                 <span class="vi-toggle__label">Версия для слабовидящих</span>
             </button>
-
         </div>
     </div>
-</div><!-- .top-bar -->
+</div>
 
-<!-- ===== NAVIGATION ===== -->
+<!-- NAVIGATION -->
 <nav class="site-nav" role="navigation" aria-label="Основное меню">
     <div class="container">
         <div class="site-nav__inner">
-
-            <?php wp_nav_menu( [
+            <?php wp_nav_menu([
                 'theme_location' => 'primary',
                 'menu_class'     => 'main-menu',
                 'container'      => false,
                 'depth'          => 2,
                 'fallback_cb'    => '__return_false',
-            ] ); ?>
-
-            <!-- Hamburger для мобильных -->
+            ]); ?>
             <button class="nav-toggle" id="nav-toggle" aria-label="Открыть меню" aria-expanded="false">
-                <span></span>
-                <span></span>
-                <span></span>
+                <span></span><span></span><span></span>
             </button>
-
         </div>
     </div>
-</nav><!-- .site-nav -->
+</nav>
 
 <main class="site-main" id="main">

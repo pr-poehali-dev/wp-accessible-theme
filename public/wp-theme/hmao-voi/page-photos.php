@@ -4,87 +4,38 @@
  */
 get_header();
 ?>
-
-<section class="page-hero">
+<div class="page-hero">
     <div class="container">
-        <div class="page-hero__tag">🖼 Фотоархив</div>
-        <h1><?php the_title(); ?></h1>
-        <p>Фотоальбомы мероприятий и событий организации</p>
+        <div class="page-hero__badge">📷 Галерея</div>
+        <h1>Фотографии</h1>
+        <p>Фотоотчёты с мероприятий и событий организации</p>
     </div>
-</section>
+</div>
 
-<div class="page-content">
+<div class="photos-section">
 <div class="container">
-
-    <?php
-    $albums = get_posts([
-        'post_type'      => 'voi_photo',
-        'posts_per_page' => -1,
-        'post_status'    => 'publish',
-        'orderby'        => 'menu_order',
-        'order'          => 'ASC',
-    ]);
-    ?>
-
-    <?php if ( empty($albums) ) : ?>
-        <div class="voi-card" style="padding:40px; text-align:center; color:#64748B;">
-            <div style="font-size:3rem; margin-bottom:16px;">🖼</div>
-            <p>Фотоальбомы пока не добавлены.<br>Перейдите в <strong>Фотоальбомы → Добавить</strong> в панели управления.<br><br>
-            В редакторе добавляйте фотографии с помощью блока <strong>«Галерея»</strong> Gutenberg.</p>
-        </div>
-    <?php else : ?>
-
-    <div class="albums-grid">
-        <?php foreach ( $albums as $album ) :
-            $thumb = get_the_post_thumbnail( $album->ID, 'medium', [
-                'class' => 'album-card__thumb',
-                'style' => 'height:120px;object-fit:cover;',
-                'alt'   => get_the_title($album),
-            ]);
-            $date  = get_the_date('F Y', $album->ID);
-        ?>
-        <div class="album-card">
-            <?php if ( $thumb ) : ?>
-                <?php echo $thumb; ?>
-            <?php else : ?>
-                <div class="album-card__thumb">🖼</div>
-            <?php endif; ?>
-            <div class="album-card__info">
-                <div class="album-card__title"><?php echo esc_html( get_the_title($album) ); ?></div>
-                <div class="album-card__meta">
-                    <span><?php echo esc_html($date); ?></span>
-                </div>
-            </div>
-        </div>
-        <?php endforeach; ?>
+<?php
+$albums = get_posts(['post_type'=>'voi_album','numberposts'=>-1,'orderby'=>'menu_order','order'=>'ASC']);
+if ($albums) :
+?>
+<div class="photo-albums-grid">
+<?php foreach ($albums as $a) :
+    $thumb = get_the_post_thumbnail($a->ID,'medium_large');
+?>
+<div class="photo-album-card">
+    <div class="photo-album-card__thumb"><?php echo $thumb ?: '<div style="height:200px;background:linear-gradient(135deg,var(--brand-dark),var(--brand-mid));display:flex;align-items:center;justify-content:center;font-size:3rem;">📷</div>'; ?></div>
+    <div class="photo-album-card__body">
+        <div class="photo-album-card__title"><?php echo esc_html($a->post_title); ?></div>
+        <?php if ($a->post_content) : ?>
+        <div class="photo-album-card__count"><?php echo esc_html(wp_trim_words($a->post_content,10)); ?></div>
+        <?php endif; ?>
     </div>
-
-    <!-- Галереи из всех альбомов -->
-    <?php foreach ( $albums as $album ) :
-        $content = get_post_field('post_content', $album->ID);
-        if ( ! $content ) continue;
-    ?>
-    <div style="margin-bottom:40px;">
-        <h3 style="font-family:var(--font-head);color:var(--brand-dark);margin-bottom:16px;">
-            <?php echo esc_html( get_the_title($album) ); ?>
-        </h3>
-        <div class="wp-gallery-wrapper">
-            <?php echo apply_filters('the_content', $content); ?>
-        </div>
-    </div>
-    <?php endforeach; ?>
-
-    <?php endif; ?>
-
-    <!-- Редактируемый контент страницы -->
-    <?php if ( have_posts() ) : while ( have_posts() ) : the_post();
-        if ( get_the_content() ) : ?>
-            <div class="entry-content" style="margin-top:28px;">
-                <?php the_content(); ?>
-            </div>
-        <?php endif;
-    endwhile; endif; ?>
-
+</div>
+<?php endforeach; wp_reset_postdata(); ?>
+</div>
+<?php else : ?>
+<p style="color:var(--gray-600);padding:2rem 0;">Альбомы пока не добавлены. Перейдите в <strong>Фотоальбомы → Добавить</strong> в панели администратора.</p>
+<?php endif; ?>
 </div>
 </div>
 
